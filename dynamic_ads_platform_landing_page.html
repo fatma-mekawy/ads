@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AdNova Pro</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --ink: #212127;
+            --paper: #f5f0e8;
+            --cream: #ede8dc;
+            --accent: #5d1c12;
+            --accent2: #1a1aff;
+            --gold: #e8c84a;
+            --muted: #6b6760;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--paper);
+            color: var(--ink);
+            font-family: 'DM Sans', sans-serif;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* CUSTOM CURSOR */
+        .cursor {
+            width: 12px;
+            height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background 0.2s;
+            mix-blend-mode: multiply;
+        }
+
+        .cursor-ring {
+            width: 36px;
+            height: 36px;
+            border: 1.5px solid var(--accent);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: all 0.12s ease-out;
+            mix-blend-mode: multiply;
+        }
+
+        body:hover .cursor-ring {
+            opacity: 1;
+        }
+
+        /* NAV */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 6%;
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+            mix-blend-mode: normal;
+        }
+
+        .nav-logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            letter-spacing: 0.12em;
+            color: var(--ink);
+            line-height: 1;
+        }
+
+        .nav-logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .nav-links li {
+            cursor: none;
+            position: relative;
+        }
+
+        .nav-links li::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 1.5px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+
+        .nav-links li:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 10px 22px;
+            background: var(--ink);
+            color: var(--paper);
+            border: none;
+            cursor: none;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .nav-cta:hover {
+            background: var(--accent);
+            color: var(--white);
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            padding: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-left {
+            padding: 140px 6% 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-eyebrow {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.68rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .hero-eyebrow::before {
+            content: '';
+            display: inline-block;
+            width: 32px;
+            height: 1px;
+            background: var(--accent);
+        }
+
+        .hero h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(5rem, 9vw, 9.5rem);
+            line-height: 0.9;
+            letter-spacing: -0.01em;
+            color: var(--ink);
+            margin-bottom: 36px;
+        }
+
+        .hero h1 em {
+            font-style: normal;
+            color: var(--accent);
+            display: block;
+        }
+
+        .hero-desc {
+            font-size: 1.05rem;
+            color: var(--muted);
+            line-height: 1.65;
+            max-width: 380px;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .btn-primary {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            padding: 16px 36px;
+            background: var(--accent);
+            color: var(--white);
+            border: none;
+            cursor: none;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--ink);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.35s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        .btn-primary:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .btn-primary span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-stat {
+            font-family: 'Space Mono', monospace;
+        }
+
+        .hero-stat strong {
+            display: block;
+            font-size: 1.8rem;
+            color: var(--ink);
+        }
+
+        .hero-stat small {
+            font-size: 0.65rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .hero-right {
+            position: relative;
+            overflow: hidden;
+            background: var(--ink);
+        }
+
+        .hero-img-main {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.75;
+            mix-blend-mode: luminosity;
+        }
+
+        .hero-overlay-text {
+            position: absolute;
+            bottom: 40px;
+            left: 40px;
+            right: 40px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 5rem;
+            color: rgba(255, 255, 255, 0.07);
+            line-height: 1;
+            letter-spacing: 0.05em;
+            pointer-events: none;
+        }
+
+        .hero-badge {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            width: 100px;
+            height: 100px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.58rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-align: center;
+            line-height: 1.4;
+            color: var(--ink);
+            animation: rotateBadge 12s linear infinite;
+        }
+
+        @keyframes rotateBadge {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* MARQUEE */
+        .marquee-bar {
+            background: var(--ink);
+            padding: 14px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+        }
+
+        .marquee-track {
+            display: inline-flex;
+            gap: 0;
+            animation: marquee 18s linear infinite;
+        }
+
+        .marquee-track span {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.1rem;
+            letter-spacing: 0.12em;
+            color: var(--paper);
+            padding: 0 32px;
+        }
+
+        .marquee-track span.dot {
+            color: var(--accent);
+            padding: 0 4px;
+        }
+
+        @keyframes marquee {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* SECTION COMMONS */
+        section {
+            padding: 110px 6%;
+        }
+
+        .section-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-label::before {
+            content: '';
+            display: inline-block;
+            width: 24px;
+            height: 1px;
+            background: var(--accent);
+        }
+
+        .section-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.8rem, 5vw, 4.8rem);
+            line-height: 0.95;
+            letter-spacing: 0.02em;
+            margin-bottom: 60px;
+        }
+
+        /* FEATURED (CAROUSEL) */
+        .featured-section {
+            background: var(--cream);
+        }
+
+        .carousel-wrapper {
+            display: flex;
+            gap: 24px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            scrollbar-width: none;
+        }
+
+        .carousel-wrapper::-webkit-scrollbar {
+            display: none;
+        }
+
+        .feat-card {
+            min-width: 360px;
+            position: relative;
+            overflow: hidden;
+            background: var(--ink);
+            cursor: none;
+            group: true;
+        }
+
+        .feat-card img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            opacity: 0.65;
+            transition: opacity 0.5s, transform 0.6s;
+            display: block;
+            filter: grayscale(40%);
+        }
+
+        .feat-card:hover img {
+            opacity: 0.4;
+            transform: scale(1.05);
+        }
+
+        .feat-card-body {
+            padding: 20px 24px 24px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(10, 10, 15, 0.95) 60%, transparent);
+        }
+
+        .feat-card-tag {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.6rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 6px;
+        }
+
+        .feat-card-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.6rem;
+            letter-spacing: 0.04em;
+            color: var(--white);
+            line-height: 1;
+            margin-bottom: 12px;
+        }
+
+        .feat-card-meta {
+            display: flex;
+            gap: 20px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.62rem;
+            letter-spacing: 0.08em;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .feat-card-meta button {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.5);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.62rem;
+            letter-spacing: 0.08em;
+            cursor: none;
+            transition: color 0.2s;
+        }
+
+        .feat-card-meta button:hover {
+            color: var(--accent);
+        }
+
+        /* ADS GRID */
+        .ads-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2px;
+            background: var(--ink);
+        }
+
+        .ad-tile {
+            background: var(--paper);
+            overflow: hidden;
+            position: relative;
+            cursor: none;
+        }
+
+        .ad-tile-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+            filter: grayscale(20%);
+            transition: filter 0.4s, transform 0.5s;
+        }
+
+        .ad-tile:hover .ad-tile-img {
+            filter: grayscale(0%);
+            transform: scale(1.04);
+        }
+
+        .ad-tile-inner {
+            padding: 18px 20px 20px;
+            border-top: 2px solid var(--cream);
+        }
+
+        .ad-tile-tag {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.58rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 6px;
+        }
+
+        .ad-tile-title {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--ink);
+            margin-bottom: 14px;
+            line-height: 1.3;
+        }
+
+        .ad-tile-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.6rem;
+            letter-spacing: 0.06em;
+            color: var(--muted);
+        }
+
+        .ad-tile-meta button {
+            background: none;
+            border: none;
+            color: var(--muted);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.6rem;
+            letter-spacing: 0.06em;
+            cursor: none;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .ad-tile-meta button:hover {
+            color: var(--accent);
+        }
+
+        .heart-icon {
+            font-size: 14px;
+        }
+
+        /* NUMBERS */
+        .stats-section {
+            background: var(--ink);
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+            padding: 0;
+        }
+
+        .stat-block {
+            padding: 60px 48px;
+            border-right: 1px solid rgba(255, 255, 255, 0.07);
+            text-align: center;
+        }
+
+        .stat-block:last-child {
+            border-right: none;
+        }
+
+        .stat-num {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(3rem, 5vw, 5.5rem);
+            color: var(--paper);
+            line-height: 1;
+            letter-spacing: 0.02em;
+        }
+
+        .stat-num em {
+            color: var(--accent);
+            font-style: normal;
+        }
+
+        .stat-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.62rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: rgba(245, 240, 232, 0.35);
+            margin-top: 8px;
+        }
+
+        /* POST SECTION */
+        .post-section {
+            background: var(--paper);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .post-promo h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(3rem, 5vw, 5rem);
+            line-height: 0.95;
+            letter-spacing: 0.02em;
+            margin-bottom: 20px;
+        }
+
+        .post-promo p {
+            font-size: 1rem;
+            color: var(--muted);
+            line-height: 1.65;
+            font-weight: 300;
+            max-width: 380px;
+        }
+
+        .post-form-wrapper {
+            background: var(--ink);
+            padding: 40px 44px;
+        }
+
+        .form-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.62rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(245, 240, 232, 0.4);
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 0;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(245, 240, 232, 0.2);
+            color: var(--paper);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            margin-bottom: 28px;
+            outline: none;
+            transition: border-color 0.2s;
+            cursor: none;
+        }
+
+        .form-input::placeholder {
+            color: rgba(245, 240, 232, 0.2);
+        }
+
+        .form-input:focus {
+            border-color: var(--accent);
+        }
+
+        .btn-submit {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            padding: 16px 40px;
+            background: var(--accent);
+            color: var(--white);
+            border: none;
+            cursor: none;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            transition: background 0.25s;
+        }
+
+        .btn-submit:hover {
+            background: var(--gold);
+            color: var(--ink);
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--ink);
+            padding: 60px 6% 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .footer-logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3rem;
+            color: var(--paper);
+            letter-spacing: 0.08em;
+            line-height: 1;
+        }
+
+        .footer-logo span {
+            color: var(--accent);
+        }
+
+        .footer-copy {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.6rem;
+            letter-spacing: 0.1em;
+            color: rgba(245, 240, 232, 0.25);
+        }
+
+        /* EMPTY STATE */
+        .empty-state {
+            grid-column: 1/-1;
+            padding: 80px 40px;
+            text-align: center;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        /* ANIMATIONS */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-left>* {
+            animation: fadeUp 0.8s ease both;
+        }
+
+        .hero-left>*:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .hero-left>*:nth-child(2) {
+            animation-delay: 0.25s;
+        }
+
+        .hero-left>*:nth-child(3) {
+            animation-delay: 0.38s;
+        }
+
+        .hero-left>*:nth-child(4) {
+            animation-delay: 0.5s;
+        }
+
+        .hero-left>*:nth-child(5) {
+            animation-delay: 0.62s;
+        }
+
+        /* PAGE LOAD LINE */
+        .load-line {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            background: var(--accent);
+            z-index: 9999;
+            animation: loadLine 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes loadLine {
+            from {
+                width: 0;
+            }
+
+            to {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-right {
+                height: 50vh;
+            }
+
+            .hero-overlay-text {
+                font-size: 3rem;
+            }
+
+            .stats-section {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stat-block:nth-child(2) {
+                border-right: none;
+            }
+
+            .post-section {
+                grid-template-columns: 1fr;
+            }
+
+            .feat-card {
+                min-width: 280px;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 20px;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="load-line"></div>
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <!-- NAV -->
+    <nav>
+        <div class="nav-logo">Ad<span>Nova</span></div>
+        <ul class="nav-links">
+            <li>Home</li>
+            <li>Features</li>
+            <li>Ads</li>
+            <li>Pricing</li>
+        </ul>
+        <button class="nav-cta">Launch Campaign</button>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-left">
+            <div class="hero-eyebrow">Premium Ad Platform</div>
+            <h1>Run Ads<em>Like a Giant</em></h1>
+            <p class="hero-desc">Create, publish, and track high-performance campaigns with real-time insights that turn
+                browsers into buyers.</p>
+            <div class="hero-actions">
+                <button class="btn-primary"><span>Get Started Free →</span></button>
+                <div class="hero-stat">
+                    <strong>12K+</strong>
+                    <small>Active Campaigns</small>
+                </div>
+            </div>
+        </div>
+        <div class="hero-right">
+            <img class="hero-img-main"
+                src="https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=1200&q=80" alt=""
+                onerror="this.src='https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=80'">
+            <div class="hero-overlay-text">NOVA<br>2026</div>
+            <div class="hero-badge">★<br>Best<br>Ads<br>Platform<br>2026</div>
+        </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee-bar">
+        <div class="marquee-track" id="marquee">
+            <span>Real-Time Analytics</span><span class="dot">✦</span>
+            <span>Global Reach</span><span class="dot">✦</span>
+            <span>AI-Powered Targeting</span><span class="dot">✦</span>
+            <span>Creative Studio</span><span class="dot">✦</span>
+            <span>Performance Tracking</span><span class="dot">✦</span>
+            <span>Brand Amplification</span><span class="dot">✦</span>
+            <span>Zero-Waste Budget</span><span class="dot">✦</span>
+            <span>Real-Time Analytics</span><span class="dot">✦</span>
+            <span>Global Reach</span><span class="dot">✦</span>
+            <span>AI-Powered Targeting</span><span class="dot">✦</span>
+            <span>Creative Studio</span><span class="dot">✦</span>
+            <span>Performance Tracking</span><span class="dot">✦</span>
+            <span>Brand Amplification</span><span class="dot">✦</span>
+            <span>Zero-Waste Budget</span><span class="dot">✦</span>
+        </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-section">
+        <div class="stat-block">
+            <div class="stat-num">98<em>%</em></div>
+            <div class="stat-label">Client Retention</div>
+        </div>
+        <div class="stat-block">
+            <div class="stat-num">4<em>x</em></div>
+            <div class="stat-label">Average ROI Boost</div>
+        </div>
+        <div class="stat-block">
+            <div class="stat-num">140<em>+</em></div>
+            <div class="stat-label">Countries Reached</div>
+        </div>
+        <div class="stat-block">
+            <div class="stat-num">3<em>B</em></div>
+            <div class="stat-label">Impressions Monthly</div>
+        </div>
+    </div>
+
+    <!-- FEATURED ADS -->
+    <section class="featured-section">
+        <div class="section-label">Curated</div>
+        <div class="section-title">Featured<br>Campaigns</div>
+        <div class="carousel-wrapper" id="featured"></div>
+    </section>
+
+    <!-- ALL ADS -->
+    <section style="padding: 110px 0; background: var(--paper);">
+        <div style="padding: 0 6%;">
+            <div class="section-label">Discover</div>
+            <div class="section-title">Latest<br>Ads</div>
+        </div>
+        <div class="ads-grid" id="ads"></div>
+    </section>
+
+    <!-- POST -->
+    <section class="post-section">
+        <div class="post-promo">
+            <div class="section-label">Create</div>
+            <h2>Tell The<br>World<br>Your Story</h2>
+            <p>Publish in seconds. Reach millions. Every great campaign starts with a single idea — make yours
+                unforgettable.</p>
+        </div>
+        <div class="post-form-wrapper">
+            <form id="form">
+                <label class="form-label">Campaign Title</label>
+                <input class="form-input" id="title" placeholder="e.g. Summer 2026 Launch" required>
+                <label class="form-label">Image URL</label>
+                <input class="form-input" id="img" placeholder="https://…  (optional)">
+                <button class="btn-submit" type="submit">Publish Campaign →</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-logo">Ad<span>Nova</span></div>
+        <div class="footer-copy">© 2026 AdNova Pro — All rights reserved</div>
+    </footer>
+
+    <script>
+        // Cursor
+        const cursor = document.getElementById('cursor');
+        const ring = document.getElementById('cursorRing');
+        let mx = 0, my = 0, rx = 0, ry = 0;
+        document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx + 'px'; cursor.style.top = my + 'px'; });
+        function animRing() { rx += (mx - rx) * 0.14; ry += (my - ry) * 0.14; ring.style.left = rx + 'px'; ring.style.top = ry + 'px'; requestAnimationFrame(animRing); }
+        animRing();
+        document.querySelectorAll('button, li, a, input').forEach(el => {
+            el.addEventListener('mouseenter', () => { cursor.style.width = '20px'; cursor.style.height = '20px'; });
+            el.addEventListener('mouseleave', () => { cursor.style.width = '12px'; cursor.style.height = '12px'; });
+        });
+
+        // Data
+        const fallbackImgs = [
+            'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1200&q=80',
+            'https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=1200&q=80',
+            'https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?auto=format&fit=crop&w=1200&q=80',
+            'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80',
+            'https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=1200&q=80'
+        ];
+
+        const seedAds = [
+            { title: "Nike Summer Campaign", img: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1200&q=80", views: 120, likes: 30 },
+            { title: "Tech Startup Launch", img: "https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=1200&q=80", views: 98, likes: 21 },
+            { title: "Food Delivery Promo", img: "https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?auto=format&fit=crop&w=1200&q=80", views: 240, likes: 55 },
+            { title: "Urban Fashion House", img: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1200&q=80", views: 177, likes: 44 },
+            { title: "Electric Vehicles 2026", img: "https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=1200&q=80", views: 312, likes: 88 }
+        ];
+
+        let ads = JSON.parse(localStorage.getItem('adnova_ads')) || seedAds;
+
+        function fallback(el, i) { el.src = fallbackImgs[i % fallbackImgs.length]; }
+
+        function fmtNum(n) { return n >= 1000 ? (n / 1000).toFixed(1) + 'k' : n; }
+
+        function render() {
+            const adsEl = document.getElementById('ads');
+            const featEl = document.getElementById('featured');
+            adsEl.innerHTML = ''; featEl.innerHTML = '';
+
+            if (ads.length === 0) {
+                adsEl.innerHTML = '<div class="empty-state">No campaigns yet — be the first to publish</div>';
+                return;
+            }
+
+            ads.forEach((ad, i) => {
+                ad.views = (ad.views || 0) + 1;
+                ad.likes = ad.likes || 0;
+
+                // Grid tile
+                adsEl.innerHTML += `
+<div class="ad-tile">
+  <img class="ad-tile-img" src="${ad.img || fallbackImgs[i % fallbackImgs.length]}" onerror="fallback(this,${i})">
+  <div class="ad-tile-inner">
+    <div class="ad-tile-tag">Sponsored</div>
+    <div class="ad-tile-title">${ad.title}</div>
+    <div class="ad-tile-meta">
+      <span>👁 ${fmtNum(ad.views)} views</span>
+      <button onclick="like(${i})"><span class="heart-icon">♥</span> ${ad.likes}</button>
+    </div>
+  </div>
+</div>`;
+
+                // Featured carousel (first 5)
+                if (i < 5) {
+                    featEl.innerHTML += `
+<div class="feat-card">
+  <img src="${ad.img || fallbackImgs[i % fallbackImgs.length]}" onerror="fallback(this,${i})">
+  <div class="feat-card-body">
+    <div class="feat-card-tag">★ Featured Campaign</div>
+    <div class="feat-card-title">${ad.title}</div>
+    <div class="feat-card-meta">
+      <span>👁 ${fmtNum(ad.views)}</span>
+      <button onclick="like(${i})">♥ ${ad.likes}</button>
+    </div>
+  </div>
+</div>`;
+                }
+            });
+
+            localStorage.setItem('adnova_ads', JSON.stringify(ads));
+        }
+
+        function like(i) { ads[i].likes++; render(); }
+
+        document.getElementById('form').addEventListener('submit', e => {
+            e.preventDefault();
+            const title = document.getElementById('title').value.trim();
+            const img = document.getElementById('img').value.trim();
+            if (!title) return;
+            ads.unshift({ title, img: img || fallbackImgs[0], views: 0, likes: 0 });
+            e.target.reset();
+            render();
+        });
+
+        render();
+    </script>
+</body>
+
+</html>
